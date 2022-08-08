@@ -1,17 +1,17 @@
 # Hearts (La dame de pique)
 
 ## Prerequisites
-install node and npm
+install **node** and **npm**
 
-install gcloud (to deploy)
+install **gcloud** (to deploy)
 
 ## Launch locally
-install http-server globally :
+install **http-server** globally :
 
 `npm i http-server -g`
 
 ## github
-generate a public/private key to add to github.com settings
+generate a ssh public/private key to then add github.com settings
 
 `ssh-keygen -t rsa -C "your_email@example.com"`
 

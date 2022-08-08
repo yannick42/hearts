@@ -1,0 +1,51 @@
+body {
+  background-color: lightgrey;
+}
+  
+:root {
+  --player-width: 250px;
+  --player-height: 30px;
+}
+
+#table {
+  width: 100%;
+  height: 50%;
+}
+
+.player {
+  position: absolute;
+  height: var(--player-height);
+  padding: 5px;
+  user-select: none;
+  font-size: 1.5em;
+}
+
+#north {
+  top: 0;
+  left: calc(50% - var(--player-width)/2);
+  transform: rotate(180deg);
+}
+
+#east {
+  top: calc(50% - var(--player-height)/2);
+  right: 0;
+  /*transform-origin: top left;*/
+  transform: translate(50px) rotate(-90deg);
+}
+
+#south {
+  bottom: 0;
+  left: calc(50% - var(--player-width)/2);
+}
+
+#west {
+  top: calc(50% - var(--player-height)/2);
+  left: 0;
+  transform: translate(-50px) rotate(90deg);
+}
+
+.card {
+  border: 1px solid black;
+  margin: 2px;
+  cursor: pointer;
+}

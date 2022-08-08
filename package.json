@@ -1,0 +1,12 @@
+{
+  "name": "hearts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "login": "gcloud auth login && gcloud config set project my-sandbox-yannick",
+    "deploy": "yes | gcloud run deploy frontend --source frontend/ --project my-sandbox-yannick --region europe-west9"
+  },
+  "author": "yannick",
+  "license": "ISC"
+}

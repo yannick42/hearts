@@ -1,6 +1,6 @@
 
 import { Player } from "/js/player.js";
-import { colors, ordered_numbers, allCards, orderFn } from "/js/util.js";
+import { colors, ordered_numbers, allCards, orderFn, log, resetLog } from "/js/util.js";
 
 //
 // Game states
@@ -14,6 +14,8 @@ export let Game = {
   playingOrder: [],
   players: {},
   scores: {}, // to keep track of score...
+  countHumanPlayer: 0,
+  heartsPlayed: false,
 
   //
   // Functions
@@ -86,6 +88,10 @@ export let Game = {
    */
   start(humanPlayers=[]) {
 
+    resetLog();
+
+    Game.countHumanPlayer = humanPlayers.length;
+    Game.heartsPlayed = false;
     Game.playingOrder = ['north', 'east', 'south', 'west'];
 
     // add 4 ordered players
@@ -98,6 +104,11 @@ export let Game = {
     // show distributed cards on board for each player
     Game.playingOrder.map(player => Game.displayPlayerCards(player));
 
+
+    // find 3 worst cards of every players
+    Game.playingOrder.forEach(player => console.log("worst cards of", player, ":", Game.findXWorstCards(Game.players[player])));
+
+
   },
 
   showPlayedCard: (cards) => {
@@ -109,5 +120,74 @@ export let Game = {
         let cardDomElem = Game.DOM.createCard(card);
         domElem.appendChild(cardDomElem);
     });
+  },
+
+  /**
+   * Find which player lose
+   * 
+   * @param {*} playedCards 
+   * @returns looser
+   */
+  whoLose: (playedCards) => {
+    let playedColor = playedCards[0];
+
+    // TODO
+
+    return 0;
+  },
+
+  /**
+   * Find which card are usable, based on what is currently on the board, and player's hand
+   * 
+   * @param {*} player 
+   * @param {*} playedCards 
+   */
+  getAvailableMoves: (player, playedCards) => {
+
+    // which color is wanted
+    let firstPlayed = playedCards[0] ?? null,
+        doWeHaveThisColor = false;
+
+    let playedColor = firstPlayed?.length ? firstPlayed[0] : null;
+
+    // someone played or player is the first ?
+    if(playedColor) {
+      doWeHaveThisColor = Game.players[player].cards.some(c => c[0] === playedColor);
+      
+      //if(player == "south") log("Do you have the color "+playedColor+" ? " + (doWeHaveThisColor?'yes':'no'));
+
+      if(doWeHaveThisColor) {
+        return allCards.filter(card => card.includes(playedColor));
+      }
+    }
+
+    // Is it possible to play in the wanted color ?
+    if(playedColor && !doWeHaveThisColor) {
+      // NO ! -> can play everything ???
+      return allCards;
+    }
+
+    Game.heartsPlayed = Game.heartsPlayed || Game.players[player].cards.every(c => c[0] === '♥');
+
+    // Is it possible to play heart ?
+    return Game.heartsPlayed ? allCards : allCards.filter(card => !card.includes('♥'));
+  },
+
+  isAvailableMove: (playedCards, card) => {
+    return Game.getAvailableMoves(Game.currentPlayer, playedCards).includes(card);
+  },
+
+  // FIX ME !
+  // NOT USED YET !
+  findXWorstCards: (player, number=3) => {
+    // TODO
+
+    let currentCards = player.cards;
+
+    return currentCards.map(String).sort((card1, card2) => {
+      return card1.slice(1) > card2.slice(1) ? -1 : 1;
+    }).slice(0, number);
+
   }
+
 };

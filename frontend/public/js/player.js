@@ -13,17 +13,17 @@ export class Player {
    * Async function to choose a card to play
    * - TODO : given the board game
    */
-  async play(strategy) {
+  async proposeCard(strategy) {
     switch(strategy) {
       case "random":
       default: // default strategy
 
           let randomIndex = Math.floor(Math.random()*this.cards.length);
-          let card = this.cards.splice(randomIndex, 1)
-          console.info(`${this.name} is playing card ${card} !`);
+          //let card = this.cards.splice(randomIndex, 1)
+          console.info(`${this.name} is playing card ${this.cards[randomIndex]} !`);
 
           // resolve immediatly !
-          return new Promise((resolve, reject) => resolve(card[0]));
+          return new Promise((resolve, reject) => resolve(this.cards[randomIndex]));
       
       case "wait_click":
         return new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ export class Player {
             if(e.target.tagName !== 'SPAN') return; // skip clicks outside a card...
 
             console.log("clicked:", card)
-            this.cards.splice(this.cards.indexOf(card), 1);
+            //this.cards.splice(this.cards.indexOf(card), 1);
 
             // stop listening to clicks when finished
             document.getElementById(this.name).removeEventListener('click', fn);
@@ -47,6 +47,10 @@ export class Player {
           document.getElementById(this.name).addEventListener('click', fn);
         });
     }
+  }
+
+  play(card) {
+    this.cards.splice(this.cards.indexOf(card), 1);
   }
 
 }

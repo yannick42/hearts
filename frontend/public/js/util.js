@@ -17,3 +17,11 @@ export const orderFn = (card1, card2) => {
 }
 
 export const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+export function log(text) {
+    document.getElementById('debug-info').innerText = text + '\n' + document.getElementById('debug-info').innerText;
+}
+
+export function resetLog(text) {
+    document.getElementById('debug-info').innerText = '';
+}

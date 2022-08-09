@@ -31,6 +31,18 @@ body {
   cursor: pointer;
 }
 
+#debug-info {
+  position: absolute;
+  right: 0;
+  width: 350px;
+  bottom: 0;
+  height: 200px;
+  background-color: grey;
+  color: white;
+  border: 3px solid white;
+  overflow-y: scroll;
+}
+
 #played-cards {
   left: calc(50% - 150px);
   width: 300px;

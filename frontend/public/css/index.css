@@ -3,7 +3,7 @@ body {
 }
   
 :root {
-  --player-width: 400px;
+  --player-width: calc(13*40px);
   --player-height: 30px;
 }
 
@@ -20,6 +20,15 @@ body {
   user-select: none;
   font-size: 1.5em;
   text-align: center;
+}
+
+.human {
+  background-color: rgb(229, 201, 243);
+  border: 1px solid purple;
+}
+
+.human > .card {
+  cursor: pointer;
 }
 
 #played-cards {
@@ -57,5 +66,4 @@ body {
 .card {
   border: 1px solid black;
   margin: 2px;
-  cursor: pointer;
 }

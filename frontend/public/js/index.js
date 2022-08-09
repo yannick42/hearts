@@ -9,7 +9,7 @@ document.getElementById('start-btn').addEventListener('click', function() {
 async function main() {
 
   // distribute cards
-  Game.start(['south']);
+  Game.start(['south']); // array with human players
 
   // Start game loop
   while(!Game.isFinished()) { // all cards played ?
@@ -27,25 +27,28 @@ async function main() {
       if(p.type == 'AI') { // TODO: add a basic "AI"
         card = await p.play('random');
       } else {
-        // TODO : wait user click
+        // UI: show the current cards played
+        Game.showPlayedCard(playedCards);
+
+        // TODO : show authorized moves !
+
         card = await p.play('wait_click');
-        console.log("???", card);
       }
 
       playedCards.push(card);
-      Game.next(); // go to next player
 
-      // UI: show the current cards played
-      Game.showPlayedCard(playedCards);
+      Game.next(); // go to next player
     }
 
-    
+    // UI: show the current cards played
+    Game.showPlayedCard(playedCards);
     //console.warn(playedCards);
 
 
     // TODO: check who wins !!
       // TODO: who wins start in the next loop
     
+
     // UI: update players board
     Object.keys(Game.players).map(player => Game.displayPlayerCards(player));
 

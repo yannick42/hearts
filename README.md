@@ -12,7 +12,7 @@ install **gcloud** (to deploy inside a container to the **Google CloudRun** serv
 ## Launch locally
 install development tools (local dev server) with `npm run install-frontend`
 
-run `npm run front`, then we should see the static site on *http://localhost:8080*, it updates when you are coding and modify files
+run `npm run front`, then we should see the static site on *http://localhost:8080*, it updates automatically while you are coding, and modifying files (css, js, ...)
 
 ## github
 generate a ssh public/private key

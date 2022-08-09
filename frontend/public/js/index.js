@@ -2,14 +2,23 @@
 import { Game } from "/js/game.js";
 import { sleep } from "/js/util.js";
 
-document.getElementById('start-btn').addEventListener('click', function() {
+document.getElementById('start-btn-1').addEventListener('click', function() {
+  // distribute cards
+  Game.start(['south']); // array with human players
+
+  main();
+});
+
+
+document.getElementById('start-btn-2').addEventListener('click', function() {
+  // distribute cards
+  Game.start(); // with 4 AI
+
   main();
 });
 
 async function main() {
 
-  // distribute cards
-  Game.start(['south']); // array with human players
 
   // Start game loop
   while(!Game.isFinished()) { // all cards played ?

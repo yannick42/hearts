@@ -26,7 +26,14 @@ export let Game = {
     Game.players[name] = p;
     Game.scores[name] = 0; // initial score
 
-    if(type == "human") document.getElementById(name).classList.add('human');
+    if(type == "human") {
+      document.getElementById(name).classList.remove('ai');
+      document.getElementById(name).classList.add('human');
+    }
+    if(type == "AI") {
+      document.getElementById(name).classList.remove('human');
+      document.getElementById(name).classList.add('ai');
+    }
   },
 
   getCurrentPlayer: () => Game.players[Game.currentPlayer],
@@ -82,26 +89,15 @@ export let Game = {
     Game.playingOrder = ['north', 'east', 'south', 'west'];
 
     // add 4 ordered players
-    Game.playingOrder.forEach(player => Game.addPlayer(player, player.includes(humanPlayers) ? 'human' : 'AI'));
+    Game.playingOrder.forEach(player => Game.addPlayer(player, humanPlayers.includes(player) ? 'human' : 'AI'));
 
     // give all cards to players
     const shuffledCards = Game.getShuffledCard();
     Game.distributeCardDeck(shuffledCards);
 
-    //Game.showPlayedCard([]);
-
     // show distributed cards on board for each player
     Game.playingOrder.map(player => Game.displayPlayerCards(player));
 
-    /* 
-    humanPlayers.forEach(player => {
-      document.getElementById(player).querySelectorAll('.card').forEach(c => {
-        c.addEventListener('click', function (elem) {
-          console.log(elem.innerText);
-        });
-      });
-    });
-    */
   },
 
   showPlayedCard: (cards) => {

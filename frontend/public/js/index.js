@@ -43,7 +43,9 @@ async function main() {
     
     //console.warn("----------------");
 
-    let playedCards = [], points = 0;
+    let playedCards = [],
+        points = 0,
+        roundOrder = [];
 
     if(Game.heartsPlayed) {
       log('Hearts played');
@@ -59,6 +61,7 @@ async function main() {
           isAvailableMove, // boolean
           retries = 0; // attempts
 
+      roundOrder.push(p.name);
       do {
         if(p.type === 'AI') {
           card = await p.proposeCard('random'); // TODO: add a basic "AI"
@@ -97,11 +100,11 @@ async function main() {
 
     // UI: show the current cards played
     Game.showPlayedCard(playedCards);
-    log("Round "+round+" : "+playedCards);
+    log("Round "+round+" ("+roundOrder+") : "+playedCards);
 
     Game.heartsPlayed = Game.heartsPlayed || playedCards.map(c => c[0]).includes('♥');
 
-    let roundLoser = Game.whoLose(playedCards);
+    let roundLoser = roundOrder[Game.whoLose(playedCards)];
     
     // count points & display !
     points = playedCards.filter(c => c[0] === '♥').length + (playedCards.includes('♠Q') ? 13 : 0);

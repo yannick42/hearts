@@ -141,7 +141,7 @@ export let Game = {
     let cardsToCheck = playedCards.filter(c => c[0] === wantedColor).sort(orderFn);
     let index = playedCards.indexOf(cardsToCheck.pop());
 
-    return Game.playingOrder[index];
+    return index;
   },
 
   /**

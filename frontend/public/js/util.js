@@ -25,3 +25,31 @@ export function log(text) {
 export function resetLog(text) {
     document.getElementById('debug-info').innerHTML = '';
 }
+
+/**
+ * Log a variable to debug
+ * 
+ * @param {*} name  variable name
+ * @param {*} value (if null, it delete the variable) 
+ * @param {*} overwrite 
+ */
+export function logvar(name, value, overwrite=false) {
+  let el = document.querySelector('#debug-variables > #'+name),
+      debugEl = document.getElementById('debug-variables');
+  if(!el) {
+    let span = document.createElement('span');
+    span.id = name;
+    span.className = "variable";
+    el = debugEl.appendChild(span);
+  }
+
+  if(overwrite) {
+    if(value === null) {
+      el.parentElement.removeChild(el);
+    } else {
+      el.innerHTML = value;
+    }
+  } else {
+    el.innerHTML = value + '<br/>' + el.innerHTML;
+  }
+}

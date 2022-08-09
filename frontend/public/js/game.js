@@ -8,8 +8,9 @@ import { colors, ordered_numbers, allCards, orderFn, log, resetLog } from "/js/u
 export let Game = {
 
   //
-  // variables
+  // variables & config.
   //
+  winningScore: 30, // TODO: use 100
   currentPlayer: 'north', // north player at first
   playingOrder: [],
   players: {},
@@ -17,10 +18,26 @@ export let Game = {
   countHumanPlayer: 0,
   heartsPlayed: false,
 
+
   //
   // Functions
   //
   isFinished: () => Object.keys(Game.players).every(player => Game.players[player].cards.length === 0),
+
+  hasALoser: () => Object.keys(Game.players).some(player => Game.scores[player] >= Game.winningScore),
+
+  // TODO : handle if there is a draw
+  winner: () => {
+    let min = Game.winningScore;
+    let winner;
+    Object.keys(Game.players).forEach(player => {
+      if(Game.scores[player] < min) {
+        winner = player;
+        min = Game.scores[player];
+      } 
+    });
+    return winner;
+  },
 
   addPlayer: (name, type = 'AI') => {
     let p = new Player(name)
@@ -61,6 +78,7 @@ export let Game = {
   distributeCardDeck: (cards) => {
     cards.forEach((card, i) => {
       let currentPlayer = Game.players[Game.playingOrder[i%Game.playingOrder.length]];
+      if(card == '♣2') Game.currentPlayer = currentPlayer.name; // detects who start !
       currentPlayer.cards.push(card);
     });
     Game.playingOrder.map(player => Game.players[player].cards.sort(orderFn))
@@ -90,18 +108,19 @@ export let Game = {
   /**
    * Prepare a new Hearts game
    */
-  start(humanPlayers=[]) {
-
+  init(humanPlayers=[]) {
     resetLog();
 
     Game.countHumanPlayer = humanPlayers.length;
-    Game.heartsPlayed = false;
     Game.playingOrder = ['north', 'east', 'south', 'west'];
-
     Game.currentPlayer = 'north';
 
     // add 4 ordered players
     Game.playingOrder.forEach(player => Game.addPlayer(player, humanPlayers.includes(player) ? 'human' : 'AI'));
+  },
+
+  startRound: () => {
+    Game.heartsPlayed = false;
 
     // give all cards to players
     const shuffledCards = Game.getShuffledCard();
@@ -110,11 +129,9 @@ export let Game = {
     // show distributed cards on board for each player
     Game.playingOrder.map(player => Game.displayPlayerCards(player));
 
-
     // find 3 worst cards of every players
     Game.playingOrder.forEach(player => console.log("worst cards of", player, ":", Game.findXWorstCards(Game.players[player])));
-
-
+    // TODO: give them to ???
   },
 
   showPlayedCard: (cards) => {

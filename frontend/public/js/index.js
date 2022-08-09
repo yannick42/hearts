@@ -1,23 +1,54 @@
 
 import { Game } from "/js/game.js";
-import { sleep, log } from "/js/util.js";
+import { sleep, log, logvar } from "/js/util.js";
 
 
 
 /**
  * UI events ...
  */
-document.getElementById('start-btn-1').addEventListener('click', function() {
+document.getElementById('start-btn-1').addEventListener('click', async function() {
   // distribute cards
-  Game.start(['south']); // array with human players
-  main();
+  Game.init(['south']); // array with human players
+
+  logvar('winning_score', "<b>Final score :</b> " + Game.winningScore + " (to stop)", true /* overwrite */);
+  logvar('results', null, true /* overwrite */);
+  logvar('winner', null, true /* overwrite */);
+  
+  let fold = 1;
+  do {
+    logvar('fold', "<b>Fold :</b> " + fold, true /* overwrite */);
+
+    // it keep scores between Rounds
+    Game.startRound();
+    await main();
+
+  } while(!Game.hasALoser());
+
+  logvar('winner', "And the <b>winner</b> is ... <mark class='highlight-winner'>" + Game.winner() + "</mark> !", true /* overwrite */);
 });
 
 
-document.getElementById('start-btn-2').addEventListener('click', function() {
+document.getElementById('start-btn-2').addEventListener('click', async function() {
   // distribute cards
-  Game.start(); // with 4 AI
-  main();
+  Game.init(); // with 4 AI
+
+  logvar('winning_score', "<b>Final score :</b> " + Game.winningScore + " (to stop)", true /* overwrite */);
+  logvar('results', null, true /* overwrite */);
+  logvar('winner', null, true /* overwrite */);
+  
+  let fold = 1;
+  do {
+    logvar('fold', "<b>Fold :</b> " + fold, true /* overwrite */);
+
+    // it keep scores between Rounds
+    Game.startRound();
+    await main();
+
+    fold++;
+  } while(!Game.hasALoser());
+
+  logvar('winner', "And the <b>winner</b> is ... <mark class='highlight-winner'>" + Game.winner() + "</mark> !", true /* overwrite */);
 });
 
 
@@ -35,7 +66,7 @@ async function main() {
   // who is serving ?
   let token = document.getElementById('token');
   token.style.visibility = 'visible';
-  token.style.top = document.getElementById(Game.currentPlayer).getBoundingClientRect().top + 'px';
+  token.style.top = (document.getElementById(Game.currentPlayer).getBoundingClientRect().top - 20) + 'px';
   token.style.left = document.getElementById(Game.currentPlayer).getBoundingClientRect().left + 'px';
 
   // Start the game loop
@@ -48,9 +79,9 @@ async function main() {
         roundOrder = [];
 
     if(Game.heartsPlayed) {
-      log('Hearts played');
+      logvar('hearts', 'Hearts played', true /* overwrite */);
     } else {
-      log('Hearts not playable');
+      logvar('hearts', 'Hearts not playable', true /* overwrite */);
     }
 
     // each player send a card
@@ -88,7 +119,12 @@ async function main() {
         if(p.type === "human" && !isAvailableMove) log('You can\'t play ' + card + " " + ("!".repeat(retries+1)));
 
         retries++;
-      } while(!isAvailableMove);
+      } while(!isAvailableMove && retries < 50);
+
+      if(retries >= 50)  {
+        console.log('???????');
+        return;
+      }
       
       // the move is valid -> play and add it
       p.play(card);
@@ -123,7 +159,9 @@ async function main() {
     //
 
     // temporisation to see visually who wins ...
-    await sleep( Game.countHumanPlayer > 0 ? 750 : 250 /*milliseconds*/ );
+    await sleep( Game.countHumanPlayer > 0 ? 1250 : 250 /*milliseconds*/ );
+
+    logvar('round', "<b>Round :</b> " + round, true /* overwrite */);
 
     round++;
   }
@@ -131,13 +169,12 @@ async function main() {
   //
   // Show round's winner
   //
-  log('<hr/>');
-  Object.keys(Game.scores).forEach(player => log('<b><mark>'+player+': </mark>'+Game.scores[player]+'</b>'));
-  log('<b>RESULTS:</b>');
+  let message = '<b>Results:</b><br/>';
+  Object.keys(Game.scores).forEach(player => message += '<b><mark>'+player+'</mark> : '+Game.scores[player]+'</b><br/>');
+
+  logvar('results', message, true /* overwrite */);
 
   // hide token
   document.getElementById('token').style.visibility = 'hidden';
 
 }
-
-main()

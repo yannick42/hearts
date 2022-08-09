@@ -17,12 +17,20 @@ export class Player {
     switch(strategy) {
       case "random":
       default: // default strategy
-          let randomIndex = Math.floor(Math.random()*this.cards.length);
-          
-          //console.info(`${this.name} is playing card ${this.cards[randomIndex]} !`);
+
+          let randomIndex, card, p = Game.getCurrentPlayer();
+          //do
+          //{
+            randomIndex = Math.floor(Math.random()*this.cards.length);
+            card = this.cards[randomIndex];
+          //}
+          //while(card === '♠Q' && p.cards.length > 1); // do not pick Queen of Spades unless last card ...
+          // TODO: do that only if first card ...
+
+          //console.info(`${this.name} is playing card ${card} !`);
 
           // resolve immediatly !
-          return new Promise((resolve, reject) => resolve(this.cards[randomIndex]));
+          return new Promise((resolve, reject) => resolve(card));
       
       case "wait_click":
         return new Promise((resolve, reject) => {

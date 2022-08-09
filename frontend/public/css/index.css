@@ -31,16 +31,45 @@ body {
   cursor: pointer;
 }
 
-#debug-info {
+#debug-variables {
   position: absolute;
   right: 0;
-  width: 350px;
-  bottom: 0;
+  width: 360px;
+  bottom: 150px;
   height: 200px;
   background-color: grey;
   color: white;
   border: 3px solid white;
   overflow-y: scroll;
+
+  border-image-source: linear-gradient(to left, #66597c, #f0ed3e);
+  border-image-slice: 1;
+  border-width: 5px;
+}
+
+#debug-variables > .variable {
+  display: inline-table;
+  width: 100%;
+}
+
+#debug-variables > .variable:nth-child(2n) {
+  background-color: lightslategrey;
+}
+
+#debug-info {
+  position: absolute;
+  right: 0;
+  width: 360px;
+  bottom: 0;
+  height: 150px;
+  background-color: grey;
+  color: white;
+  border: 3px solid white;
+  overflow-y: scroll;
+
+  border-image-source: linear-gradient(to left, #66597c, #f0ed3e);
+  border-image-slice: 1;
+  border-width: 5px;
 }
 
 #played-cards {
@@ -52,7 +81,7 @@ body {
 }
 
 #north {
-  top: 15px;
+  top: 30px;
   left: calc(50% - var(--player-width)/2);
   transform: rotate(180deg);
 }
@@ -65,7 +94,7 @@ body {
 }
 
 #south {
-  bottom: 30px;
+  bottom: 50px;
   left: calc(50% - var(--player-width)/2);
 }
 
@@ -99,4 +128,9 @@ body {
   height: 8px;
   visibility: hidden;
   background-color: white;
+}
+
+.highlight-winner {
+  background-color: red;
+  color: white;
 }

@@ -18,7 +18,7 @@ export class Player {
         default:
           let randomIndex = Math.floor(Math.random()*this.cards.length);
           let card = this.cards.splice(randomIndex, 1)
-          //console.info(`${this.name} is playing card ${card} !`);
+          console.info(`${this.name} is playing card ${card} !`);
           return card[0];
     }
   }

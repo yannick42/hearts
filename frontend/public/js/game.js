@@ -10,6 +10,7 @@ export let Game = {
   playingOrder: [],
   players: {},
   scores: {}, // to keep track of score...
+  isFinished: () => Object.keys(Game.players).every(player => Game.players[player].cards.length === 0),
   addPlayer: (name) => {
     Game.playingOrder.push(name);
     Game.players[name] = new Player(name);
@@ -39,7 +40,7 @@ export let Game = {
     // empty everything
     domElem.innerHTML = '';
 
-    Game.players[player].cards.map(card => {  
+    Game.players[player].cards.map(card => {
       let newCard = Game.DOM.createCard(card);
       domElem.appendChild(newCard);
     });
@@ -57,6 +58,9 @@ export let Game = {
    * Prepare a new Hearts game
    */
   prepare() {
+
+    Game.playingOrder = [];
+
     // add 4 ordered players
     Game.addPlayer('north');
     Game.addPlayer('east');

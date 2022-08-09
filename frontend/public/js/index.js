@@ -2,44 +2,46 @@
 import { Game } from "/js/game.js";
 import { sleep } from "/js/util.js";
 
-// distribute cards
-Game.prepare();
+document.getElementById('start-btn').addEventListener('click', function() {
+  main();
+});
 
-let i = 1; // number of cards played
+async function main() {
 
-// Start game loop
-while(true) {
-  
-  let playedCards = [null, null, null, null];
+  // distribute cards
+  Game.prepare();
 
-  // each player show a card
-  for(let c = 0; c < Game.playingOrder.length; c++) {
-    let card = Game.getCurrentPlayer().play('random') // TODO: add a basic "AI"
-    playedCards[Game.getCurrentPlayerId()] = card;
-    Game.next(); // go to next player
+  // Start game loop
+  while(!Game.isFinished()) { // all cards played ?
+    
+    console.warn("----------------");
+
+    let playedCards = [null, null, null, null];
+
+    // each player show a card
+    for(let c = 0; c < Game.playingOrder.length; c++) {
+      let card = Game.getCurrentPlayer().play('random') // TODO: add a basic "AI"
+      playedCards[Game.getCurrentPlayerId()] = card;
+      Game.next(); // go to next player
+    }
+
+    // UI: show the 4 cards played
+    Game.showPlayedCard(playedCards);
+    //console.log(playedCards);
+    
+
+    // TODO: check who wins !!
+    // ...
+    
+    // UI: update players board
+    Object.keys(Game.players).map(player => Game.displayPlayerCards(player));
+
+
+    // temporisation
+    await sleep(100 /*ms*/);
   }
 
-  //console.log(playedCard);
-  Game.showPlayedCard(playedCards);
-
-
-  
-  // TODO: check who wins !!
-
-
-  // Update board
-
-  Object.keys(Game.players).map(player => Game.displayPlayerCards(player));
-
-  await sleep(100 /*ms*/);
-  
-  // TODO: 
-  //Game.currentPlayer = playingOrder
-  
-  if(i >= 13) { // all cards played
-    // TODO: Show winner, ...
-    break;
-  }
-
-  i++;
+  // TODO: Show winner, ...
 }
+
+main()

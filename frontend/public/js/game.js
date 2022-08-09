@@ -43,9 +43,13 @@ export let Game = {
   getCurrentPlayerId: () => Game.playingOrder.indexOf(Game.currentPlayer),
 
   // go to next player
-  next: () => {
-    let nextIndex = (Game.playingOrder.indexOf(Game.currentPlayer)+1) % Game.playingOrder.length;
-    Game.currentPlayer = Game.playingOrder[nextIndex];
+  next: (goto=null) => {
+    if(goto) {
+      Game.currentPlayer = goto;
+    } else {
+      let nextIndex = (Game.playingOrder.indexOf(Game.currentPlayer)+1) % Game.playingOrder.length;
+      Game.currentPlayer = Game.playingOrder[nextIndex];
+    }
   },
 
   // shuffle the 52 card (French deck)
@@ -63,7 +67,7 @@ export let Game = {
   },
 
   displayPlayerCards: (player) => {
-    let domElem = document.getElementById(player);
+    let domElem = document.getElementById(player).querySelector('.cards');
     // empty everything
     domElem.innerHTML = '';
 
@@ -93,6 +97,8 @@ export let Game = {
     Game.countHumanPlayer = humanPlayers.length;
     Game.heartsPlayed = false;
     Game.playingOrder = ['north', 'east', 'south', 'west'];
+
+    Game.currentPlayer = 'north';
 
     // add 4 ordered players
     Game.playingOrder.forEach(player => Game.addPlayer(player, humanPlayers.includes(player) ? 'human' : 'AI'));
@@ -129,11 +135,13 @@ export let Game = {
    * @returns looser
    */
   whoLose: (playedCards) => {
-    let playedColor = playedCards[0];
+    let wantedColor = playedCards[0][0];
 
-    // TODO
+    // find greatest of this color
+    let cardsToCheck = playedCards.filter(c => c[0] === wantedColor).sort(orderFn);
+    let index = playedCards.indexOf(cardsToCheck.pop());
 
-    return 0;
+    return Game.playingOrder[index];
   },
 
   /**

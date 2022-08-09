@@ -32,12 +32,18 @@ async function main() {
 
   let round = 1; // fr: pli
 
+  // who is serving ?
+  let token = document.getElementById('token');
+  token.style.visibility = 'visible';
+  token.style.top = document.getElementById(Game.currentPlayer).getBoundingClientRect().top + 'px';
+  token.style.left = document.getElementById(Game.currentPlayer).getBoundingClientRect().left + 'px';
+
   // Start the game loop
   while(!Game.isFinished()) { // all cards played ?
     
-    console.warn("----------------");
+    //console.warn("----------------");
 
-    let playedCards = [];
+    let playedCards = [], points = 0;
 
     if(Game.heartsPlayed) {
       log('Hearts played');
@@ -66,8 +72,8 @@ async function main() {
           let el = document.getElementById(p.name);
           p.cards.forEach((card, index) => {
             let availability = Game.isAvailableMove(playedCards, card);
-            let cardElem = el.querySelectorAll("span").item(index);
-            cardElem.style.backgroundColor = availability ? "white" : "lightgrey";
+            let cardElem = el.querySelectorAll(".cards > span").item(index);
+            cardElem.style.backgroundColor = availability ? "whitesmoke" : "lightgrey";
             cardElem.style.paddingTop = availability ? "8px" : "";
           });
 
@@ -95,12 +101,16 @@ async function main() {
 
     Game.heartsPlayed = Game.heartsPlayed || playedCards.map(c => c[0]).includes('♥');
 
+    let roundLoser = Game.whoLose(playedCards);
+    
+    // count points & display !
+    points = playedCards.filter(c => c[0] === '♥').length + (playedCards.includes('♠Q') ? 13 : 0);
 
-    // TODO: check who loses !
-    // TODO: count points !
-    // TODO: the one who lose, should start in the next round ?
-    //console.log("Looser : ", Game.whoLose(playedCards));
+    log("<b>The looser is : <mark>" + roundLoser + "</mark> and get " + points + " points !</b>");
+    Game.scores[roundLoser] += points;
 
+    // the one who lose must start in the next "round"
+    Game.next(roundLoser);
 
     // UI: refresh players board (as a card has been played...)
     Object.keys(Game.players).map(player => Game.displayPlayerCards(player));
@@ -115,7 +125,15 @@ async function main() {
     round++;
   }
 
-  // TODO: Show winner, ...
+  //
+  // Show round's winner
+  //
+  log('<hr/>');
+  Object.keys(Game.scores).forEach(player => log('<b><mark>'+player+': </mark>'+Game.scores[player]+'</b>'));
+  log('<b>RESULTS:</b>');
+
+  // hide token
+  document.getElementById('token').style.visibility = 'hidden';
 
 }
 

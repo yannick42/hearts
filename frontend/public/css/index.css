@@ -27,7 +27,7 @@ body {
   border: 1px solid purple;
 }
 
-.human > .card {
+.human .card {
   cursor: pointer;
 }
 
@@ -88,4 +88,15 @@ body {
 .big-card {
   width: 68px;
   height: 75px;
+}
+
+#token {
+  position: fixed;
+  border: 4px solid green;
+  border-radius: 50%;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  visibility: hidden;
+  background-color: white;
 }

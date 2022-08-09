@@ -36,14 +36,14 @@ export class Player {
             //this.cards.splice(this.cards.indexOf(card), 1);
 
             // stop listening to clicks when finished
-            document.getElementById(this.name).removeEventListener('click', fn);
+            document.getElementById(this.name).removeEventListener('mouseup', fn);
 
             // emit the chosen card
             resolve(card);
           }
 
           // allow user to choose a card
-          document.getElementById(this.name).addEventListener('click', fn);
+          document.getElementById(this.name).addEventListener('mouseup', fn);
         });
     }
   }

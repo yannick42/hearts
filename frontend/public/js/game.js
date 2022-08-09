@@ -74,9 +74,9 @@ export let Game = {
   },
 
   DOM: {
-    createCard: (card) => {
+    createCard: (card, additionalClassName='') => {
         let newCard = document.createElement('span');
-        newCard.className = 'card';
+        newCard.className = 'card' + (additionalClassName ? ' '+additionalClassName : '');
         newCard.innerText = card;
         if(card.includes('♥') || card.includes('♦')) newCard.style.color = 'red';
         return newCard;
@@ -117,7 +117,7 @@ export let Game = {
     domElem.innerHTML = '';
 
     cards.forEach(card => {
-        let cardDomElem = Game.DOM.createCard(card);
+        let cardDomElem = Game.DOM.createCard(card, 'big-card');
         domElem.appendChild(cardDomElem);
     });
   },

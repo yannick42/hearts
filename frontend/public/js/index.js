@@ -61,9 +61,8 @@ async function main() {
           // UI: show the current cards played by others
           Game.showPlayedCard(playedCards);
 
-          //
-          // TODO: show/refresh authorized moves visually (greyed out card)
-          //
+          // Refresh authorized moves visually (greyed out card)
+          // TODO : not efficient ?
           let el = document.getElementById(p.name);
           p.cards.forEach((card, index) => {
             let availability = Game.isAvailableMove(playedCards, card);

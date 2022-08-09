@@ -18,7 +18,7 @@ body {
   height: var(--player-height);
   padding: 5px;
   user-select: none;
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: center;
 }
 
@@ -52,7 +52,7 @@ body {
 }
 
 #north {
-  top: 0;
+  top: 15px;
   left: calc(50% - var(--player-width)/2);
   transform: rotate(180deg);
 }
@@ -65,7 +65,7 @@ body {
 }
 
 #south {
-  bottom: 0;
+  bottom: 30px;
   left: calc(50% - var(--player-width)/2);
 }
 
@@ -78,4 +78,14 @@ body {
 .card {
   border: 1px solid black;
   margin: 2px;
+  background-color: whitesmoke;
+  width: 33px;
+  display: inline-block;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.big-card {
+  width: 68px;
+  height: 75px;
 }

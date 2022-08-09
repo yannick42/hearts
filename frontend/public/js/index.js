@@ -41,6 +41,8 @@ document.getElementById('start-btn-2').addEventListener('click', async function(
   do {
     logvar('fold', "<b>Fold :</b> " + fold, true /* overwrite */);
 
+    log('<hr/>');
+    
     // it keep scores between Rounds
     Game.startRound();
     await main();

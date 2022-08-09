@@ -3,7 +3,7 @@ body {
 }
   
 :root {
-  --player-width: 250px;
+  --player-width: 400px;
   --player-height: 30px;
 }
 
@@ -14,16 +14,20 @@ body {
 
 .player {
   position: absolute;
+  width: var(--player-width);
   height: var(--player-height);
   padding: 5px;
   user-select: none;
   font-size: 1.5em;
+  text-align: center;
 }
 
 #played-cards {
-  left: 50%;
-  top: 500px;
+  left: calc(50% - 150px);
+  width: 300px;
+  top: 400px;
   position: relative;
+  font-size: 3em;
 }
 
 #north {

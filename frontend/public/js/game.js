@@ -10,7 +10,7 @@ export let Game = {
   playingOrder: [],
   players: {},
   scores: {}, // to keep track of score...
-  addPlayer : (name) => {
+  addPlayer: (name) => {
     Game.playingOrder.push(name);
     Game.players[name] = new Player(name);
     Game.scores[name] = 0;
@@ -30,11 +30,7 @@ export let Game = {
   distributeCardDeck: (cards) => {
     cards.forEach((card, i) => {
       let currentPlayer = Game.players[Game.playingOrder[i%Game.playingOrder.length]];
-      if(currentPlayer.cards?.length)  {
-        currentPlayer.cards.push(card);
-      } else {
-        currentPlayer.cards = [card];
-      }
+      currentPlayer.cards.push(card);
     });
     Game.playingOrder.map(player => Game.players[player].cards.sort(orderFn))
   },

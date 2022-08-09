@@ -1,5 +1,7 @@
 # Hearts (La dame de pique)
 
+development environment is on : https://frontend-hdhtb3y7gq-od.a.run.app
+
 ## Prerequisites
 install **node** and **npm**
 

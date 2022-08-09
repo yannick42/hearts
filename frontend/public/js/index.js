@@ -2,6 +2,11 @@
 import { Game } from "/js/game.js";
 import { sleep, log } from "/js/util.js";
 
+
+
+/**
+ * UI events ...
+ */
 document.getElementById('start-btn-1').addEventListener('click', function() {
   // distribute cards
   Game.start(['south']); // array with human players
@@ -15,10 +20,19 @@ document.getElementById('start-btn-2').addEventListener('click', function() {
   main();
 });
 
+
+
+
+/**
+ * entrypoint to game logic ...
+ * 
+ * TODO: handle multiple rounds and stop if a player has >= 100 points
+ */
 async function main() {
 
-  let round = 1;
-  // Start game loop
+  let round = 1; // fr: pli
+
+  // Start the game loop
   while(!Game.isFinished()) { // all cards played ?
     
     console.warn("----------------");
@@ -35,28 +49,38 @@ async function main() {
     for(let c = 0; c < Game.playingOrder.length; c++) {
 
       let p = Game.getCurrentPlayer(),
-          card,
-          availableMove,
+          card, // proposed card
+          isAvailableMove, // boolean
           retries = 0; // attempts
 
       do {
-        if(p.type == 'AI') {
+        if(p.type === 'AI') {
           card = await p.proposeCard('random'); // TODO: add a basic "AI"
-        } else {
-          // UI: show the current cards played
+        } else { // human
+
+          // UI: show the current cards played by others
           Game.showPlayedCard(playedCards);
 
-          // TODO : show authorized moves visually (greyed out card) !
+          //
+          // TODO: show/refresh authorized moves visually (greyed out card)
+          //
+          let el = document.getElementById(p.name);
+          p.cards.forEach((card, index) => {
+            let availability = Game.isAvailableMove(playedCards, card);
+            let cardElem = el.querySelectorAll("span").item(index);
+            cardElem.style.backgroundColor = availability ? "white" : "lightgrey";
+            cardElem.style.paddingTop = availability ? "8px" : "";
+          });
 
           card = await p.proposeCard('wait_click');
         }
         
-        availableMove = Game.isAvailableMove(playedCards, card);
+        isAvailableMove = Game.isAvailableMove(playedCards, card);
 
-        if(p.type === "human" && !availableMove) log('You can\'t play ' + card + " " + ("!".repeat(retries+1)));
+        if(p.type === "human" && !isAvailableMove) log('You can\'t play ' + card + " " + ("!".repeat(retries+1)));
 
         retries++;
-      } while(!availableMove);
+      } while(!isAvailableMove);
       
       // the move is valid -> play and add it
       p.play(card);
@@ -73,14 +97,14 @@ async function main() {
     Game.heartsPlayed = Game.heartsPlayed || playedCards.map(c => c[0]).includes('♥');
 
 
-    // TODO: check who loses !!
-      // TODO: who loses, will start in the next round ?
-    console.log("Looser : ", Game.whoLose(playedCards));
-    
+    // TODO: check who loses !
+    // TODO: count points !
+    // TODO: the one who lose, should start in the next round ?
+    //console.log("Looser : ", Game.whoLose(playedCards));
 
-    // UI: update players board
+
+    // UI: refresh players board (as a card has been played...)
     Object.keys(Game.players).map(player => Game.displayPlayerCards(player));
-
 
     //
     // END of round

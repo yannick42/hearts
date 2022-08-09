@@ -167,6 +167,7 @@ export let Game = {
       return allCards;
     }
 
+    // Only hearts remaining ?! play it... TODO: Check if correct.....
     Game.heartsPlayed = Game.heartsPlayed || Game.players[player].cards.every(c => c[0] === '♥');
 
     // Is it possible to play heart ?

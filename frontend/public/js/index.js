@@ -35,7 +35,9 @@ async function main() {
     for(let c = 0; c < Game.playingOrder.length; c++) {
 
       let p = Game.getCurrentPlayer(),
-          card;
+          card,
+          availableMove,
+          retries = 0; // attempts
 
       do {
         if(p.type == 'AI') {
@@ -47,12 +49,19 @@ async function main() {
           // TODO : show authorized moves visually (greyed out card) !
 
           card = await p.proposeCard('wait_click');
-        }    
-      } while(!Game.isAvailableMove(playedCards, card)); // TODO ...
+        }
+        
+        availableMove = Game.isAvailableMove(playedCards, card);
+
+        if(p.type === "human" && !availableMove) log('You can\'t play ' + card + " " + ("!".repeat(retries+1)));
+
+        retries++;
+      } while(!availableMove);
       
-      // valided move, add it...
+      // the move is valid -> play and add it
       p.play(card);
       playedCards.push(card);
+
 
       Game.next(); // go to next player
     }
@@ -65,7 +74,7 @@ async function main() {
 
 
     // TODO: check who loses !!
-      // TODO: who loses start in the next loop ?
+      // TODO: who loses, will start in the next round ?
     console.log("Looser : ", Game.whoLose(playedCards));
     
 

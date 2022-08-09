@@ -17,10 +17,9 @@ export class Player {
     switch(strategy) {
       case "random":
       default: // default strategy
-
           let randomIndex = Math.floor(Math.random()*this.cards.length);
-          //let card = this.cards.splice(randomIndex, 1)
-          console.info(`${this.name} is playing card ${this.cards[randomIndex]} !`);
+          
+          //console.info(`${this.name} is playing card ${this.cards[randomIndex]} !`);
 
           // resolve immediatly !
           return new Promise((resolve, reject) => resolve(this.cards[randomIndex]));
@@ -28,12 +27,12 @@ export class Player {
       case "wait_click":
         return new Promise((resolve, reject) => {
 
-          let fn = (e) => {
-            let card = e.target.innerText;
+          const fn = (e) => {
+            const card = e.target.innerText;
 
             if(e.target.tagName !== 'SPAN') return; // skip clicks outside a card...
 
-            console.log("clicked:", card)
+            //console.log("clicked:", card)
             //this.cards.splice(this.cards.indexOf(card), 1);
 
             // stop listening to clicks when finished

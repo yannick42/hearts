@@ -12,8 +12,10 @@ body {
   width: 80%;
   height: 80%;
   background-color: cadetblue;
-  border: 10px solid darkgreen;
   border-radius: 10px;
+  box-shadow: 0 0 0 10px darkgreen;
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
 footer {
@@ -32,13 +34,90 @@ footer {
 }
 
 .human {
-  background-color: rgb(229, 201, 243);
-  border: 1px solid purple;
+  background-color: rgb(82 113 195);
+  border: 3px solid darkgreen;
+  height: 55px;
+}
+
+.ai .card {
+  opacity: 0.75;
 }
 
 .human .card {
   cursor: pointer;
 }
+
+#played-cards {
+  left: calc(50% - 150px);
+  width: 350px;
+  top: calc(50% - 50px);
+  position: relative;
+  font-size: 3em;
+}
+
+#north {
+  top: 30px;
+  left: calc(50% - var(--player-width)/2);
+  transform: rotate(180deg);
+}
+
+#east {
+  top: calc(50% - var(--player-height)/2);
+  right: 0;
+  /*transform-origin: top left;*/
+  transform: translate(50px) rotate(-90deg);
+}
+
+#south {
+  bottom: 50px;
+  left: calc(50% - var(--player-width)/2);
+}
+
+#west {
+  top: calc(50% - var(--player-height)/2);
+  left: 0;
+  transform: translate(-50px) rotate(90deg);
+}
+
+.card {
+  border: 1px solid black;
+  margin: 2px;
+  background-color: whitesmoke;
+  width: 33px;
+  display: inline-block;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.big-card {
+  width: 80px;
+  height: 100px;
+  text-align: center;
+}
+
+#token {
+  position: fixed;
+  border: 4px solid green;
+  border-radius: 50%;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  visibility: hidden;
+  background-color: white;
+}
+
+.highlight-winner {
+  background-color: red;
+  color: white;
+}
+
+
+
+
+
+/**
+ * DEBUG
+ */ 
 
 #debug-variables {
   position: absolute;
@@ -79,67 +158,4 @@ footer {
   border-image-source: linear-gradient(to left, #66597c, #f0ed3e);
   border-image-slice: 1;
   border-width: 5px;
-}
-
-#played-cards {
-  left: calc(50% - 150px);
-  width: 300px;
-  top: 400px;
-  position: relative;
-  font-size: 3em;
-}
-
-#north {
-  top: 30px;
-  left: calc(50% - var(--player-width)/2);
-  transform: rotate(180deg);
-}
-
-#east {
-  top: calc(50% - var(--player-height)/2);
-  right: 0;
-  /*transform-origin: top left;*/
-  transform: translate(50px) rotate(-90deg);
-}
-
-#south {
-  bottom: 50px;
-  left: calc(50% - var(--player-width)/2);
-}
-
-#west {
-  top: calc(50% - var(--player-height)/2);
-  left: 0;
-  transform: translate(-50px) rotate(90deg);
-}
-
-.card {
-  border: 1px solid black;
-  margin: 2px;
-  background-color: whitesmoke;
-  width: 33px;
-  display: inline-block;
-  height: 40px;
-  border-radius: 6px;
-}
-
-.big-card {
-  width: 68px;
-  height: 75px;
-}
-
-#token {
-  position: fixed;
-  border: 4px solid green;
-  border-radius: 50%;
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  visibility: hidden;
-  background-color: white;
-}
-
-.highlight-winner {
-  background-color: red;
-  color: white;
 }

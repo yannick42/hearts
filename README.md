@@ -1,11 +1,13 @@
 # Hearts (La dame de pique)
 
-development environment is on : https://frontend-hdhtb3y7gq-od.a.run.app
+Hearts game coded in vanilla JS (ES6+ ?)
+
+- Development environment is avaible here : https://frontend-hdhtb3y7gq-od.a.run.app
 
 ## Prerequisites
-install **node** and **npm**
+install **node** and **npm** (to launch local command)
 
-install **gcloud** (to deploy)
+install **gcloud** (to deploy inside a container to the **Google CloudRun** service)
 
 ## Launch locally
 install development tools (local dev server) with `npm run install-frontend`
@@ -13,15 +15,21 @@ install development tools (local dev server) with `npm run install-frontend`
 run `npm run front`, then we should see the static site on *http://localhost:8080*, it updates when you are coding and modify files
 
 ## github
-generate a ssh public/private key that we should then add to github.com settings
+generate a ssh public/private key
 
 `ssh-keygen -t rsa -C "your_email@example.com"`
 
-configure
+Then you should add to github.com settings
+
+You can test it with : `ssh -T git@github.com`
+
+Configure your local repository (without touching to your global settings)
 
 `git config --local user.name "your_name"`
 
 `git config --local user.email "your_email@example.com"`
+
+If you clone with https, and need to update to use git/ssh keys
 
 `git remote set-url origin git@github.com:yannick42/hearts.git`
 

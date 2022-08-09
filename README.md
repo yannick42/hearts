@@ -6,12 +6,12 @@ install **node** and **npm**
 install **gcloud** (to deploy)
 
 ## Launch locally
-install **http-server** globally :
+install **http-server** globally with `npm run install-frontend`
 
-`npm i http-server -g`
+run `npm run front`, then we should see the static site on *http://localhost:8080*
 
 ## github
-generate a ssh public/private key to then add github.com settings
+generate a ssh public/private key that we should then add to github.com settings
 
 `ssh-keygen -t rsa -C "your_email@example.com"`
 

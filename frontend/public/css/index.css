@@ -20,6 +20,12 @@ body {
   font-size: 1.5em;
 }
 
+#played-cards {
+  left: 50%;
+  top: 500px;
+  position: relative;
+}
+
 #north {
   top: 0;
   left: calc(50% - var(--player-width)/2);

@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install-frontend": "npm i -g live-server",
+    "front": "live-server frontend/public/",
     "login": "gcloud auth login && gcloud config set project my-sandbox-yannick",
     "deploy": "yes | gcloud run deploy frontend --source frontend/ --project my-sandbox-yannick --region europe-west9"
   },

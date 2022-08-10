@@ -17,7 +17,7 @@ export let Game = {
   scores: {}, // to keep track of score...
   countHumanPlayer: 0,
   heartsPlayed: false,
-
+  showAIPlayerCards: parseInt(localStorage.getItem('show-all-cards')??0),
 
   //
   // Functions
@@ -91,6 +91,8 @@ export let Game = {
 
     Game.players[player].cards.map(card => {
       let newCard = Game.DOM.createCard(card);
+      console.log("Game.showAIPlayerCards:", Game.showAIPlayerCards);
+      if(Game.players[player].type === "AI" && !Game.showAIPlayerCards) newCard.style.setProperty('color', 'transparent', 'important'); 
       domElem.appendChild(newCard);
     });
   },
@@ -100,7 +102,7 @@ export let Game = {
         let newCard = document.createElement('span');
         newCard.className = 'card' + (additionalClassName ? ' '+additionalClassName : '');
         newCard.innerText = card;
-        if(card.includes('♥') || card.includes('♦')) newCard.style.color = 'red';
+        if(card.includes('♥') || card.includes('♦')) newCard.className += ' red';
         return newCard;
     }
   },

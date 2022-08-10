@@ -3,7 +3,7 @@ body {
 }
   
 :root {
-  --player-width: calc(13*40px);
+  --player-width: calc(13*42px);
   --player-height: 30px;
 }
 
@@ -20,7 +20,8 @@ body {
 
 footer {
   position: absolute;
-  bottom: 10%;
+  bottom: 0;
+  height: 15%;
 }
 
 .player {
@@ -138,6 +139,7 @@ footer {
   color: #c44101;
   font-family: sans-serif;
   text-align: center;
+  user-select: none;
 }
 
 .highlight-winner {
@@ -145,7 +147,9 @@ footer {
   color: white;
 }
 
-
+.red {
+  color: red;
+}
 
 
 

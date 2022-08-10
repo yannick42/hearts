@@ -53,6 +53,20 @@ document.getElementById('start-btn-2').addEventListener('click', async function(
   logvar('winner', "And the <b>winner</b> is ... <mark class='highlight-winner'>" + Game.winner() + "</mark> !", true /* overwrite */);
 });
 
+document.getElementById('show-all-cards').addEventListener('click', function(e) {
+  let value = e.target.checked ? 1 : 0;
+
+  document.querySelectorAll('.ai .card').forEach(el => {
+    el.style.setProperty('color', value ? '' : 'transparent', 'important');
+  });
+  localStorage.setItem('show-all-cards', value);
+  Game.showAIPlayerCards = value;
+});
+
+window.addEventListener('load', function(e) {
+  document.getElementById('show-all-cards').checked = parseInt(localStorage.getItem('show-all-cards')) ? true : false;
+})
+
 
 
 
@@ -94,14 +108,18 @@ async function main() {
           isAvailableMove, // boolean
           retries = 0; // attempts
 
+      // UI: show the current cards played by others
+      Game.showPlayedCard(playedCards, roundOrder);
+      
+      // AI's reflection
+      await sleep( Game.countHumanPlayer > 0 ? 150 : 40 /*milliseconds*/ );
+      
       roundOrder.push(p.name);
       do {
+
         if(p.type === 'AI') {
           card = await p.proposeCard('random'); // TODO: add a basic "AI"
         } else { // human
-
-          // UI: show the current cards played by others
-          Game.showPlayedCard(playedCards, roundOrder);
 
           // Refresh authorized moves visually (greyed out card)
           // TODO : not efficient ?
@@ -110,7 +128,7 @@ async function main() {
             let availability = Game.isAvailableMove(playedCards, card);
             let cardElem = el.querySelectorAll(".cards > span").item(index);
             cardElem.style.backgroundColor = availability ? "whitesmoke" : "lightgrey";
-            cardElem.style.paddingTop = availability ? "8px" : "";
+            cardElem.style.padding = availability ? "6px 1px" : "";
           });
 
           card = await p.proposeCard('wait_click');

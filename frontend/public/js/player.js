@@ -1,6 +1,9 @@
 
-import { Game } from "/js/game.js";
+import { Game } from "/js/game.js"; // unused yet ...
 
+/**
+ * Players (AI or human)
+ */
 export class Player {
 
   cards = [];
@@ -11,10 +14,14 @@ export class Player {
 
   /**
    * Async function to choose a card to play
-   * - TODO : given the board game
+   * - TODO : given the state of the board game ...
    */
   async proposeCard(strategy) {
     switch(strategy) {
+
+      //
+      // Used by AI (dumb strategy)
+      //
       case "random":
       default: // default strategy
 
@@ -32,16 +39,16 @@ export class Player {
           // resolve immediatly !
           return new Promise((resolve, reject) => resolve(card));
       
+      //
+      // human player must choose a card => so it's an async. function...
+      //
       case "wait_click":
         return new Promise((resolve, reject) => {
 
-          const fn = (e) => {
-            const card = e.target.innerText;
-
+          const fn = (e) => {            
             if(e.target.tagName !== 'SPAN') return; // skip clicks outside a card...
-
-            //console.log("clicked:", card)
-            //this.cards.splice(this.cards.indexOf(card), 1);
+            
+            const card = e.target.innerText;
 
             // stop listening to clicks when finished
             document.getElementById(this.name).removeEventListener('mouseup', fn);

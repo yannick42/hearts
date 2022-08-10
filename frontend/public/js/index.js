@@ -42,7 +42,7 @@ document.getElementById('start-btn-2').addEventListener('click', async function(
     logvar('fold', "<b>Fold :</b> " + fold, true /* overwrite */);
 
     log('<hr/>');
-    
+
     // it keep scores between Rounds
     Game.startRound();
     await main();
@@ -101,7 +101,7 @@ async function main() {
         } else { // human
 
           // UI: show the current cards played by others
-          Game.showPlayedCard(playedCards);
+          Game.showPlayedCard(playedCards, roundOrder);
 
           // Refresh authorized moves visually (greyed out card)
           // TODO : not efficient ?
@@ -137,7 +137,7 @@ async function main() {
     }
 
     // UI: show the current cards played
-    Game.showPlayedCard(playedCards);
+    Game.showPlayedCard(playedCards, roundOrder);
     log("Round "+round+" ("+roundOrder+") : "+playedCards);
 
     Game.heartsPlayed = Game.heartsPlayed || playedCards.map(c => c[0]).includes('♥');
@@ -146,9 +146,13 @@ async function main() {
     
     // count points & display !
     points = playedCards.filter(c => c[0] === '♥').length + (playedCards.includes('♠Q') ? 13 : 0);
-
-    log("<b>The looser is : <mark>" + roundLoser + "</mark> and get " + points + " points !</b>");
-    Game.scores[roundLoser] += points;
+    if(points === 26) {
+      log("<b>The winner is : <mark>" + roundLoser + "</mark>, everyone get " + points + " points !</b>");
+      Game.scores[roundLoser] += points;
+    } else {
+      log("<b><mark>" + roundLoser + "</mark> loses and get " + points + " points !</b>");
+      Game.scores[roundLoser] += points;
+    }
 
     // the one who lose must start in the next "round"
     Game.next(roundLoser);

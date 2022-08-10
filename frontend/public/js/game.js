@@ -134,13 +134,14 @@ export let Game = {
     // TODO: give them to ???
   },
 
-  showPlayedCard: (cards) => {
+  showPlayedCard: (cards, roundOrder=Game.playingOrder) => {
     let domElem = document.getElementById('played-cards');
     // empty everything
     domElem.innerHTML = '';
 
-    cards.forEach(card => {
+    cards.forEach((card, i) => {
         let cardDomElem = Game.DOM.createCard(card, 'big-card');
+        cardDomElem.id = roundOrder[i]+"-card";
         domElem.appendChild(cardDomElem);
     });
   },

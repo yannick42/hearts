@@ -61,8 +61,8 @@ footer {
 }
 
 .human {
-  background-color: rgb(82 113 195);
-  border: 3px solid darkgreen;
+  /*background-color: rgb(82 113 195);*/
+  /*border: 3px solid darkgreen;*/
   height: 55px;
 }
 
@@ -125,6 +125,7 @@ footer {
   display: inline-block;
   height: 40px;
   border-radius: 6px;
+  padding: 6px 1px;
 }
 
 .big-card {

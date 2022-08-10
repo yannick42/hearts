@@ -128,7 +128,7 @@ async function main() {
             let availability = Game.isAvailableMove(playedCards, card);
             let cardElem = el.querySelectorAll(".cards > span").item(index);
             cardElem.style.backgroundColor = availability ? "whitesmoke" : "lightgrey";
-            cardElem.style.padding = availability ? "6px 1px" : "";
+            cardElem.style.padding = availability ? "6px 1px" : "0";
           });
 
           card = await p.proposeCard('wait_click');

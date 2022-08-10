@@ -58,6 +58,8 @@ document.getElementById('show-all-cards').addEventListener('click', function(e) 
 
   document.querySelectorAll('.ai .card').forEach(el => {
     el.style.setProperty('color', value ? '' : 'transparent', 'important');
+    el.style.setProperty('margin-left', value ? '-9px' : '-30px', 'important');
+    el.style.setProperty('background', value ? 'white' : '', 'important');
   });
   localStorage.setItem('show-all-cards', value);
   Game.showAIPlayerCards = value;
@@ -112,7 +114,7 @@ async function main() {
       Game.showPlayedCard(playedCards, roundOrder);
       
       // AI's reflection
-      await sleep( Game.countHumanPlayer > 0 ? 150 : 40 /*milliseconds*/ );
+      await sleep( Game.countHumanPlayer > 0 ? 150 : 0 /*milliseconds*/ );
       
       roundOrder.push(p.name);
       do {
@@ -183,7 +185,7 @@ async function main() {
     //
 
     // temporisation to see visually who wins ...
-    await sleep( Game.countHumanPlayer > 0 ? 1250 : 250 /*milliseconds*/ );
+    await sleep( Game.countHumanPlayer > 0 ? 1250 : 200 /*milliseconds*/ );
 
     logvar('round', "<b>Round :</b> " + round, true /* overwrite */);
 

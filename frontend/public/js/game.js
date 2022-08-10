@@ -92,7 +92,17 @@ export let Game = {
     Game.players[player].cards.map(card => {
       let newCard = Game.DOM.createCard(card);
       console.log("Game.showAIPlayerCards:", Game.showAIPlayerCards);
-      if(Game.players[player].type === "AI" && !Game.showAIPlayerCards) newCard.style.setProperty('color', 'transparent', 'important'); 
+      if(Game.players[player].type === "AI") {
+        if(!Game.showAIPlayerCards) {
+          newCard.style.setProperty('color', 'transparent', 'important');
+          newCard.style.setProperty('margin-left', '-30px', 'important');
+          newCard.style.setProperty('background', '', 'important');
+        } else {
+          newCard.style.setProperty('color', '', 'important');
+          newCard.style.setProperty('margin-left', '-9px', 'important');
+          newCard.style.setProperty('background', 'white', 'important');
+        }
+      } 
       domElem.appendChild(newCard);
     });
   },

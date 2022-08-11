@@ -5,7 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La dame de pique</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet">
+    
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/room.css">
 </head>
 <body>
     
@@ -16,6 +20,14 @@
             <div class="red">♦</div>
             <div>♣</div>
             <div class="red">♥</div>
+            <svg id="logo-title" viewBox="0 0 500 250">
+                <path id="curve" fill="transparent" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
+                <text width="500">
+                    <textPath xlink:href="#curve">
+                    La Dame de Pique
+                    </textPath>
+                </text>
+            </svg>
         </div>
 
         <span id="token" title="TODO: ??">D</span>
@@ -52,10 +64,11 @@
 
     <section id="chat">
         <form id="form" action="">
-            User: <input id="username" /><button id="connect-button">CONNECT</button><br/>
+            User: <input id="username" /> <button id="connect-button">CONNECT</button><br/>
+            
             <span id="error-message"></span><br/>
-            <input id="input" autocomplete="off" />
-            <button>Send</button>
+
+            <input id="input" autocomplete="off" /> <button>Send</button>
         </form>
         <div id="messages"></div>
         <div id="number_of_users">Number of connected users : -</div>
@@ -65,115 +78,9 @@
     <div id="debug-variables"></div>
     <div id="debug-info"></div>
 
-
+    <!-- import -->
     <script type="module" src="js/index.js"></script>
+    <script type="module" src="js/room.js"></script>
 
-
-
-
-
-
-
-
-
-
-
-    <script type="module">
-        import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
-
-        let socket, backend;
-
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
-        var messages = document.getElementById('messages');
-        var username = document.getElementById('username');
-        var errorMessage = document.getElementById('error-message');
-        var connectBtn = document.getElementById('connect-button');
-
-        if(location.hostname == "100.115.92.206" || location.hostname == "localhost" || location.hostname == "127.0.0.1") {
-            backend = "http://" + location.hostname + ":8080";
-        } else {
-            backend = "https://backend-hdhtb3y7gq-od.a.run.app";
-        }
-
-        // launch connection
-        const connectWS = () => {
-            
-            socket = io(backend, { transports : ['websocket'] });
-
-            // when new messages arrives !
-            socket.on('chat:message', function(msg) {
-                var item = document.createElement('div');
-                item.innerHTML = (msg.user ? "<b>" + msg.user + "</b>: " : "") + msg.text;
-                messages.appendChild(item);
-                messages.scrollTop = messages.scrollHeight;
-            });
-            
-            localStorage.setItem('username', username.value);
-
-            // newly connected
-            socket.emit('user:connect', username.value );
-
-            connectBtn.innerHTML = 'DISCONNECT';
-            username.disabled = true;
-        }
-
-        const disconnectWS = () => {
-            connectBtn.innerHTML = 'CONNECT';
-            localStorage.setItem('username', '');
-            // broadcast disconnect event
-            socket.emit('user:disconnected', username.value );
-            if(socket) socket.disconnect();
-            username.disabled = false;
-            messages.innerHTML = '';
-        }
-
-        // connect/disconnect
-        connectBtn.addEventListener('mouseup', function(e) {
-        
-            console.log(e.target);
-
-            if(username.value && connectBtn.innerHTML == 'CONNECT') {
-                connectWS();
-            } else {
-                disconnectWS();
-            }
-        });
-
-        // send a message
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // erase error message
-            errorMessage.innerText = "";
-
-            if(!username.value) {
-                errorMessage.innerText = "Enter a username";
-                localStorage.setItem('username', '');
-                return;
-            }
-
-            if (input.value) {
-                socket.emit('chat:message', { user: username.value, text: input.value });
-                input.value = '';
-            }
-        });
-
-        window.addEventListener('beforeunload', () => {
-            disconnectWS();
-        });
-
-        username.value = localStorage.getItem('username');
-
-        const getNumberofUsers = () => {
-            fetch(backend + '/count').then(response => {
-                response.text().then(text => document.getElementById('number_of_users').innerText = "Number of connected users : " + text);
-            });
-        };
-
-        getNumberofUsers();
-        setInterval(() => getNumberofUsers(), 5000);
-
-    </script>
 </body>
 </html>

@@ -9,21 +9,32 @@ body {
 
 #table {
   position: absolute;
-  width: 80%;
-  height: 80%;
+  width: 70%;
+  height: 70%;
   background-color: cadetblue;
   border-radius: 10px;
-  box-shadow: 0 0 0 10px darkgreen;
+  box-shadow: 0 0 0 20px darkgreen;
   margin-top: 15px;
   margin-left: 15px;
 }
 
+/**
+ * LOGO
+ */
 #logo {
-  width: 100%;
-  height: 100%;
   user-select: none;
   opacity: 0.25;
-  padding: 20% 35%;
+  left: calc(50% - 200px);
+  position: absolute;
+  top: 50%;
+}
+
+#logo-title {
+  font-size: 38pt !important;
+  font-weight: bold;
+  display: block !important;
+  font-family: 'Luckiest Guy', cursive;
+  margin-top: -55px;
 }
 
 #logo > div {
@@ -32,16 +43,16 @@ body {
 }
 
 #logo > div:nth-child(1) {
-  transform: rotate(-28deg);
+  transform: rotate(-31deg);
 }
 #logo > div:nth-child(2) {
-  transform: rotate(-14deg) translate(3px, -25px);
+  transform: rotate(-11deg) translate(3px, -36px);
 }
 #logo > div:nth-child(3) {
-  transform: rotate(14deg) translate(-3px, -25px);
+  transform: rotate(11deg) translate(-3px, -36px);
 }
 #logo > div:nth-child(4) {
-  transform: rotate(28deg);
+  transform: rotate(31deg);
 }
 
 footer {
@@ -223,26 +234,4 @@ footer {
   border-image-source: linear-gradient(to left, #66597c, #f0ed3e);
   border-image-slice: 1;
   border-width: 5px;
-}
-
-#username {
-  width: 100px;
-}
-
-#error-message {
-  color: red;
-}
-
-#chat {
-  position: absolute;
-  right: 0;
-  width: 17%;
-}
-
-#messages {
-  height: 300px;
-  overflow-y: scroll;
-  border: 1px solid black;
-  padding: 5px;
-  word-break: break-all;
 }

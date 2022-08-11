@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install": "npm run install-frontend && npm run install-backend",
     "install-frontend": "npm i -g live-server",
+    "install-backend": "cd backend/ && npm install && cd ..",
     "front": "live-server frontend/public/ --verbose --port=8000",
     "back": "node backend/index.js",
     "login": "gcloud auth login && gcloud config set project my-sandbox-yannick",
     "deploy": "npm run deploy-front",
-    "deploy-front": "yes | gcloud run deploy frontend --source frontend/ --project my-sandbox-yannick --region europe-west9",
-    "deploy-back": "yes | gcloud run deploy backend --source backend/ --project my-sandbox-yannick --region europe-west9",
+    "deploy-front": "yes | gcloud run deploy frontend --source frontend/ --project my-sandbox-yannick --region europe-west1",
+    "deploy-back": "yes | gcloud run deploy backend --source backend/ --project my-sandbox-yannick --region europe-west1",
     "deploy-all": "npm run deploy-back && npm run deploy-front"
   },
   "author": "yannick",

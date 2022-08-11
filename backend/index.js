@@ -3,10 +3,13 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const cors = require('cors');
-const origin = process.env.USER == "yannick" ? "http://100.115.92.206:8000" : "https://frontend-hdhtb3y7gq-od.a.run.app";
+const origin = process.env.USER == "yannick" ?
+    "http://100.115.92.206:8000" : "https://hearts.yannick42.dev";
+
 app.use(cors({
     origin: origin
 }));
+
 const { Server } = require("socket.io");
 const io = new Server(server, {
     cors: {

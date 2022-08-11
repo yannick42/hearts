@@ -1,5 +1,5 @@
 body {
-  background-color: lightgrey;
+  background-color: #f6ffea;
 }
   
 :root {
@@ -24,7 +24,7 @@ body {
 #logo {
   user-select: none;
   opacity: 0.25;
-  left: calc(50% - 200px);
+  left: calc(50% - 180px);
   position: absolute;
   top: 50%;
 }
@@ -69,6 +69,28 @@ footer {
   user-select: none;
   font-size: 1.2em;
   text-align: center;
+}
+
+#intro {
+  margin-bottom: 15px;
+  font-family: sans-serif;
+  font-style: italic;
+}
+
+#start-btn-1 {
+  background-color: blue;
+  outline: 4px solid black;
+  border-radius: 5px;
+  color: white;
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  font-size: 19pt;
+  padding-top: 9px;
+  font-family: 'Luckiest Guy', cursive;
+  left: calc(50% - 100px);
+  top: calc(50% - 25px);
+  cursor: pointer;
 }
 
 .human {

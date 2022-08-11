@@ -10,9 +10,16 @@
     
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/room.css">
+
+    <!-- monetization -->
+    <script async crossorigin="anonymous" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8455176152468201"></script>
 </head>
 <body>
     
+    <div id="intro">
+        <b>Welcome</b> to Hearts card game (aka. La Dame de Pique), enjoy your stay ! :)
+    </div>
+
     <div id="table">
 
         <div id="logo">
@@ -50,18 +57,22 @@
 
         <div id="played-cards"></div>
 
+        <button id="start-btn-1">Start !</button>
+
     </div>
     
     <footer>
         <a id="github" target="_blank" href="https://github.com/yannick42/hearts">GitHub code</a>
         <br/><br/>
-        <button id="start-btn-1">Start with 1 human player</button>
         <button id="start-btn-2">Start with 4 "AI"</button>
         <br/>
-        <label for="show-all-cards"><input type="checkbox" id="show-all-cards" /> DEBUG: show all cards ? </label>
+        <div id="test">
+            <label for="show-all-cards"><input type="checkbox" id="show-all-cards" /> DEBUG: show all cards ? </label>
+        </div>
     </footer>
 
 
+    <!-- TCHAT -->
     <section id="chat">
         <form id="form" action="">
             User: <input id="username" /> <button id="connect-button">CONNECT</button><br/>
@@ -74,6 +85,7 @@
         <div id="number_of_users">Number of connected users : -</div>
     </section>
 
+
     <!-- DEBUG -->
     <div id="debug-variables"></div>
     <div id="debug-info"></div>
@@ -81,6 +93,14 @@
     <!-- import -->
     <script type="module" src="js/index.js"></script>
     <script type="module" src="js/room.js"></script>
+
+    <script>
+        if(location.hostname === "hearts.yannick42.dev") {
+            document.getElementById('github').style.visibility = 'hidden';
+            document.getElementById('start-btn-2').style.visibility = 'hidden';
+            document.getElementById('test').style.visibility = 'hidden';
+        }
+    </script>
 
 </body>
 </html>

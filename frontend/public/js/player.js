@@ -16,7 +16,7 @@ export class Player {
    * Async function to choose a card to play
    * - TODO : given the state of the board game ...
    */
-  async proposeCard(strategy) {
+  async proposeCard(strategy, firstRound = false) {
     switch(strategy) {
 
       //
@@ -25,7 +25,12 @@ export class Player {
       case "random":
       default: // default strategy
 
-          let randomIndex, card, p = Game.getCurrentPlayer();
+        let randomIndex, card, p = Game.getCurrentPlayer();
+        
+        if(firstRound && this.cards.includes('♣2')) {
+          randomIndex = this.cards.indexOf('♣2');
+          card = this.cards[randomIndex];
+        } else {
           //do
           //{
             randomIndex = Math.floor(Math.random()*this.cards.length);
@@ -35,10 +40,11 @@ export class Player {
           // TODO: do that only if first card ...
 
           //console.info(`${this.name} is playing card ${card} !`);
+        }
 
-          // resolve immediatly !
-          return new Promise((resolve, reject) => resolve(card));
-      
+        // resolve immediatly !
+        return new Promise((resolve, reject) => resolve(card));
+    
       //
       // human player must choose a card => so it's an async. function...
       //

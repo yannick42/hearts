@@ -10,6 +10,7 @@ a Hearts game coded in vanilla JS (ES6+ ?...)
 To launch local commands and to develop the backend (NodeJS), install **node** (and **npm**...)
 
 Also install **gcloud** to deploy inside a container to the **Google Cloud Run** service (project_id = *my-sandbox-yannick*), **you must ask me for permissions** ;)
+- https://console.cloud.google.com/run?project=my-sandbox-yannick
 
 ---
 ## Launch locally (for development)

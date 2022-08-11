@@ -18,25 +18,28 @@ if(location.hostname == "100.115.92.206" || location.hostname == "localhost" || 
 // launch connection
 //
 const connectWS = () => {
-    
-    socket = io(backend, { transports : ['websocket'] });
+    try {
+        socket = io(backend, { transports : ['websocket'] });
 
-    // when new messages arrives !
-    socket.on('chat:message', function(msg) {
-        var item = document.createElement('div');
-        item.innerHTML = (msg.user ? "<b>" + msg.user + "</b>: " : "") + msg.text;
+        // when new messages arrives !
+        socket.on('chat:message', function(msg) {
+            var item = document.createElement('div');
+            item.innerHTML = (msg.user ? "<b>" + msg.user + "</b>: " : "") + msg.text;
 
-        messages.appendChild(item);
-        messages.scrollTop = messages.scrollHeight;
-    });
-    
-    localStorage.setItem('username', username.value);
+            messages.appendChild(item);
+            messages.scrollTop = messages.scrollHeight;
+        });
+        
+        localStorage.setItem('username', username.value);
 
-    // newly connected
-    socket.emit('user:connect', username.value );
+        // newly connected
+        socket.emit('user:connect', username.value );
 
-    connectBtn.innerHTML = 'DISCONNECT';
-    username.disabled = true;
+        connectBtn.innerHTML = 'DISCONNECT';
+        username.disabled = true;
+    } catch(e) {
+        console.warn(e);
+    }
 }
 
 const disconnectWS = () => {
@@ -87,10 +90,13 @@ username.value = localStorage.getItem('username');
 const getNumberofUsers = () => {
     fetch(backend + '/count').then(response => {
         response.text().then(text => document.getElementById('number_of_users').innerText = "Number of connected users : " + text);
+    }).catch(e => {
+        console.warn(e);
+        clearInterval(interval);
     });
 };
 
 getNumberofUsers();
 
 // poll
-setInterval(() => getNumberofUsers(), 5000);
+let interval = setInterval(() => getNumberofUsers(), 5000);

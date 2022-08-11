@@ -180,13 +180,18 @@ export let Game = {
    * @param {*} player 
    * @param {*} playedCards 
    */
-  getAvailableMoves: (player, playedCards) => {
+  getAvailableMoves: (player, playedCards, firstRound=false) => {
 
     // which color is wanted
     let firstPlayed = playedCards[0] ?? null,
         doWeHaveThisColor = false;
 
     let playedColor = firstPlayed?.length ? firstPlayed[0] : null;
+
+    // first player must play ♣2
+    if(firstRound && Game.getCurrentPlayer().cards.includes('♣2')) {
+        return ['♣2'];
+    }
 
     // someone played or player is the first ?
     if(playedColor) {
@@ -212,8 +217,9 @@ export let Game = {
     return Game.heartsPlayed ? allCards : allCards.filter(card => !card.includes('♥'));
   },
 
-  isAvailableMove: (playedCards, card) => {
-    return Game.getAvailableMoves(Game.currentPlayer, playedCards).includes(card);
+  isAvailableMove: (playedCards, card, firstRound=false) => {
+    let availableMoves = Game.getAvailableMoves(Game.currentPlayer, playedCards, firstRound);
+    return availableMoves.includes(card);
   },
 
   // FIX ME !

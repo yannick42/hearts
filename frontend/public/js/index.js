@@ -7,7 +7,10 @@ import { sleep, log, logvar } from "/js/util.js";
 /**
  * UI events ...
  */
-document.getElementById('start-btn-1').addEventListener('click', async function() {
+document.getElementById('start-btn-1').addEventListener('click', async function(e) {
+
+  e.target.style.visibility = 'hidden';
+
   // distribute cards
   Game.init(['south']); // array with human players
 
@@ -24,6 +27,8 @@ document.getElementById('start-btn-1').addEventListener('click', async function(
     await main();
 
   } while(!Game.hasALoser());
+
+  e.target.style.visibility = 'visible';
 
   logvar('winner', "And the <b>winner</b> is ... <mark class='highlight-winner'>" + Game.winner() + "</mark> !", true /* overwrite */);
 });
@@ -120,14 +125,14 @@ async function main() {
       do {
 
         if(p.type === 'AI') {
-          card = await p.proposeCard('random'); // TODO: add a basic "AI"
+          card = await p.proposeCard('random', round === 1); // TODO: add a basic "AI"
         } else { // human
 
           // Refresh authorized moves visually (greyed out card)
           // TODO : not efficient ?
           let el = document.getElementById(p.name);
           p.cards.forEach((card, index) => {
-            let availability = Game.isAvailableMove(playedCards, card);
+            let availability = Game.isAvailableMove(playedCards, card, round === 1);
             let cardElem = el.querySelectorAll(".cards > span").item(index);
             cardElem.style.backgroundColor = availability ? "whitesmoke" : "lightgrey";
             cardElem.style.padding = availability ? "6px 1px" : "0";
@@ -136,7 +141,7 @@ async function main() {
           card = await p.proposeCard('wait_click');
         }
         
-        isAvailableMove = Game.isAvailableMove(playedCards, card);
+        isAvailableMove = Game.isAvailableMove(playedCards, card, round === 1);
 
         if(p.type === "human" && !isAvailableMove) log('You can\'t play ' + card + " " + ("!".repeat(retries+1)));
 

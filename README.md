@@ -34,7 +34,7 @@ Also you can configure your local repository (without touching to your global se
 
 `git config --local user.email "your_email@example.com"`
 
-If you already cloned this repo. in https, and need to update to use your ssh keys
+If you already cloned this repo. in https, and need to update to use your ssh keys, type :
 
 `git remote set-url origin git@github.com:yannick42/hearts.git` (inside your cloned repo.)
 

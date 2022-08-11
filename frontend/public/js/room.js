@@ -71,8 +71,8 @@ form.addEventListener('submit', function(e) {
         return;
     }
 
-    let input;
-    if (input = document.getElementById('input').value) {
+    let input = document.getElementById('input');
+    if (input.value) {
         socket.emit('chat:message', { user: username.value, text: input.value });
         input.value = '';
     }
